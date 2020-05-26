@@ -1,0 +1,24 @@
+.cal-column {
+  background-color: lightblue;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.daily-cal {
+  background-color: lightblue;
+}
+
+.tile-with-practice {
+  background-color: #27d655;
+}
+.tile-with-no-practice {
+  background-color: #fa5b3e;
+}
+
+.tile-previous-month {
+  opacity: 0.4;
+}
