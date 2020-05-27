@@ -1,0 +1,10 @@
+.tile-with-practice {
+  background-color: #27d655;
+}
+.tile-with-no-practice {
+  background-color: #fa5b3e;
+}
+
+.tile-previous-month {
+  opacity: 0.4;
+}
