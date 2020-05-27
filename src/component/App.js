@@ -1,5 +1,6 @@
 import React from "react";
 import GuitarCalendar from "./GuitarCalendar";
+import ExerciseModal from "./ExerciseModal";
 import Header from "./Header";
 import {Container, Row, Col} from 'react-bootstrap';
 import "./App.css";
@@ -19,6 +20,7 @@ export default class App extends React.Component {
             <Col>Practice</Col>
           </Row>
         </Container>
+        <ExerciseModal />
       </div>
     );
   }

@@ -17,8 +17,7 @@ export default class GuitarCalendar extends React.Component {
     super(props);
     this.state = {
       history: retrieveTrainingHistory(),
-      show: false,
-      modalDate: new Date().toDateString(),
+      currentDate: new Date().toDateString(),
     };
   }
 
@@ -29,13 +28,13 @@ export default class GuitarCalendar extends React.Component {
   handleOpen(day) {
     this.setState(
       {show: true,
-       modalDate: day.toDateString()}
+       currentDate: day.toDateString()}
     );
   }
 
   setNoPractice() {
     var newHistory = new Map(this.state.history); //Shallow copy is OK
-    newHistory.set(this.state.modalDate, false);
+    newHistory.set(this.state.currentDate, false);
     this.setState(
       {history: newHistory}
     );
@@ -44,7 +43,7 @@ export default class GuitarCalendar extends React.Component {
 
   setPractice() {
     var newHistory = new Map(this.state.history); //Shallow copy is OK
-    newHistory.set(this.state.modalDate, true);
+    newHistory.set(this.state.currentDate, true);
     this.setState(
       {history: newHistory}
     );
@@ -65,7 +64,7 @@ export default class GuitarCalendar extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Did you exercise on {this.state.modalDate}</Modal.Body>
+            <Modal.Body>Did you exercise on {this.state.currentDate}</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={() => {this.setNoPractice();this.handleClose()}}>
                 No
@@ -91,8 +90,6 @@ function practiceTile({ date, view }, history) {
   if (tileDate.getMonth() !== new Date().getMonth()) {
     tileClasses.push('tile-previous-month');
   }
-  console.log(history);
-  console.log(typeof history);
   if (history.get(tileDate.toDateString()) === true) {
     tileClasses.push('tile-with-practice');
   } else if (history.get(tileDate.toDateString()) === false) {
