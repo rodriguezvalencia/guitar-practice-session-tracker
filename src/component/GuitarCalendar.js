@@ -1,13 +1,12 @@
 import React from "react";
 import Calendar from 'react-calendar'
-import {Container, Row, Col, Button, Modal, Nav, Navbar, NavDropdown} from 'react-bootstrap';
-
+//import {Button, Modal} from 'react-bootstrap';
+import ExerciseModal from "./ExerciseModal";
 import 'react-calendar/dist/Calendar.css';
 import './GuitarCalendar.css';
 
 function retrieveTrainingHistory() {
   var history = localStorage.getItem('history')?new Map(JSON.parse(localStorage.getItem('history'))):new Map();
-  var today = new Date();
   return history;
 }
 
@@ -17,33 +16,34 @@ export default class GuitarCalendar extends React.Component {
     super(props);
     this.state = {
       history: retrieveTrainingHistory(),
-      currentDate: new Date().toDateString(),
+      modalDate: new Date().toDateString(),
+      showExerciseModal: false,
     };
+    this.exerciseModal = React.createRef();
+  }
+
+  doShowModal = (childState) => {
+    this.exerciseModal.current.triggerModal();
+  }
+
+  definePractice = (practice, date) => {
+    this.setPractice(practice,date);
   }
 
   handleClose() {
-    this.setState({show: false});
+    this.props.parentCallback({show: false});
   }
 
   handleOpen(day) {
-    this.setState(
+    this.exerciseModal.current.triggerModal(
       {show: true,
-       currentDate: day.toDateString()}
+       modalDate: day.toDateString()}
     );
   }
 
-  setNoPractice() {
+  setPractice(practice, date) {
     var newHistory = new Map(this.state.history); //Shallow copy is OK
-    newHistory.set(this.state.currentDate, false);
-    this.setState(
-      {history: newHistory}
-    );
-    localStorage.setItem('history', JSON.stringify([...newHistory]));
-  }
-
-  setPractice() {
-    var newHistory = new Map(this.state.history); //Shallow copy is OK
-    newHistory.set(this.state.currentDate, true);
+    newHistory.set(date, practice);
     this.setState(
       {history: newHistory}
     );
@@ -59,22 +59,7 @@ export default class GuitarCalendar extends React.Component {
           tileClassName={({ date, view }, history) => practiceTile({ date, view }, this.state.history)}
           tileDisabled={tileDisabled}
         />
-        <>
-          <Modal show={this.state.show} onHide={() => this.handleClose()}>
-            <Modal.Header closeButton>
-              <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Did you exercise on {this.state.currentDate}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={() => {this.setNoPractice();this.handleClose()}}>
-                No
-              </Button>
-              <Button variant="primary" onClick={() => {this.setPractice();this.handleClose()}}>
-                Yes
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </>
+        <ExerciseModal ref={this.exerciseModal} definePractice={this.definePractice} />
       </div>
     );
   }
