@@ -75,10 +75,11 @@ function practiceTile({ date, view }, history) {
   if (tileDate.getMonth() !== new Date().getMonth()) {
     tileClasses.push('tile-previous-month');
   }
-  if (history.get(tileDate.toDateString()) === true) {
-    tileClasses.push('tile-with-practice');
-  } else if (history.get(tileDate.toDateString()) === false) {
+  const dateString = tileDate.toDateString();
+  if (history.has(dateString) && history.get(dateString) === false) {
     tileClasses.push('tile-with-no-practice');
+  } else if (history.has(dateString) && history.get(tileDate.toDateString()) !== false) {
+    tileClasses.push('tile-with-practice');
   }
   return tileClasses;
 }
