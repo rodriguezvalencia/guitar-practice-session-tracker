@@ -71,7 +71,7 @@ function tileDisabled({date, view}) {
 
 function practiceTile({ date, view }, history) {
   var tileDate = new Date(date);
-  var tileClasses = [];
+  var tileClasses = ['custom-tile'];
   if (tileDate.getMonth() !== new Date().getMonth()) {
     tileClasses.push('tile-previous-month');
   }

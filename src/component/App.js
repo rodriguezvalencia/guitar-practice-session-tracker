@@ -12,7 +12,7 @@ export default class App extends React.Component {
         <Header />
         <Container className="main-container">
           <Row className="main-row">
-            <Col xs={3} className="sidebar-sticky cal-column"><GuitarCalendar parentCallback = {this.doShowModal} /></Col>
+            <Col xs={9} className="sidebar-sticky cal-column"><GuitarCalendar parentCallback = {this.doShowModal} /></Col>
             <Col>Practice</Col>
           </Row>
         </Container>

@@ -5,11 +5,15 @@ import {Button, Modal, Dropdown, ButtonGroup, Form} from 'react-bootstrap';
 export default class ExerciseModal extends React.Component {
   constructor(props) {
     super(props);
+    this.resetState();
+  }
+
+  resetState = () => {
     this.state = {
-      show: false,
-      date: this.props.date,
-      songBPM: 60
-    };
+          show: false,
+          date: this.props.date,
+          songBPM: 60
+        };
   }
 
   triggerModal = (modalParams) => {
@@ -18,6 +22,7 @@ export default class ExerciseModal extends React.Component {
 
   savePractice = (practice) => {
     this.props.definePractice(practice, this.state.date);
+    this.resetState();
   }
 
   setNoPractice = () => {this.savePractice(false);}
